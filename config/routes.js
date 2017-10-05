@@ -50,9 +50,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /bis': {
-      controller: 'AddressController',
-      action: 'ma_methode'
-  }
+    'get /bis': {
+         controller: 'AddressController',
+         action: 'ma_methode'
+    },
+    'get /account': {
+          controller: 'AccountController',
+          action: 'index'
+    },
 
 };
