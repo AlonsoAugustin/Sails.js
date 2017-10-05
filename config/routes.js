@@ -34,7 +34,11 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
+    '/test': {
+        view: 'homepage'
+    },
+
 
   /***************************************************************************
   *                                                                          *
@@ -45,5 +49,10 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+  'get /bis': {
+      controller: 'AddressController',
+      action: 'ma_methode'
+  }
 
 };
