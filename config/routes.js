@@ -40,6 +40,7 @@ module.exports.routes = {
     },
 
 
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -58,5 +59,16 @@ module.exports.routes = {
           controller: 'AccountController',
           action: 'index'
     },
+    'get /login': {
+        view: 'login'
+    },
+
+    'post /login': 'AuthController.login',
+
+    '/logout': 'AuthController.logout',
+
+    'get /signup': {
+        view: 'signup'
+    }
 
 };

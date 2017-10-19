@@ -1,5 +1,5 @@
 <div>
-  <p>
+<!--  <p>
     <%= name %>
   </p>
   <p>
@@ -22,5 +22,12 @@
   </p>
   <p>
     TABjs[1_2] : <%= mon_tableau_js[0].champ_2 %>
+  </p>-->
+  <p>
+    <ul>
+    <% for(var i=0; i<lesadresses.length; i++) { %>
+    <li><%= lesadresses[i].street%></li>
+    <% } %>
+  </ul>
   </p>
 </div>

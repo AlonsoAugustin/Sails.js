@@ -23,6 +23,15 @@ module.exports = {
                 }
             ]
         };
-        return res.view('account', data);
+
+        console.log(req.user);
+
+        Address.find().exec(function (err, records) {
+            //return res.json(records);
+            //var data = {};
+            data.lesadresses = records;
+            return res.view('account', data);
+        });
+
     }
 };
