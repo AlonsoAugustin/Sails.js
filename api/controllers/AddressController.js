@@ -6,7 +6,7 @@ module.exports = {
     },
     find: function (req, res) {
         var where = {
-            street : 'Montélimar'
+            owner : req.user
         };
         Address.find(where).exec(function (err, records) {
             return res.json(records);

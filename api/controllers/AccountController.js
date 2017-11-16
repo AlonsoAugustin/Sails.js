@@ -26,7 +26,9 @@ module.exports = {
 
         console.log(req.user);
 
-        Address.find().exec(function (err, records) {
+        Address.find({
+            owner : req.user.id
+        }).exec(function (err, records) {
             //return res.json(records);
             //var data = {};
             data.lesadresses = records;
