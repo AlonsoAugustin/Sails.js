@@ -69,6 +69,11 @@ module.exports.routes = {
 
     'get /signup': {
         view: 'signup'
-    }
+    },
+
+    'get /account/addresses': {
+        controller: 'AccountController',
+        action: 'addresses'
+    },
 
 };

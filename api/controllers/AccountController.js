@@ -1,6 +1,16 @@
 module.exports = {
 
+    verrou: function(req, res) {
+        return res.view('homepage');
+        //return res.redirect('/');
+    },
+
     index: function(req, res) {
+        return res.view('account', {user: req.user});
+    },
+
+    addresses: function(req, res) {
+
         var data = {
             name: 'test',
             address: 'une autre donnée',
@@ -32,7 +42,7 @@ module.exports = {
             //return res.json(records);
             //var data = {};
             data.lesadresses = records;
-            return res.view('account', data);
+            return res.view('addresses', data);
         });
 
     }
