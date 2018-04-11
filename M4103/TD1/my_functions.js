@@ -68,6 +68,57 @@ function datemodif() {
         + document.getElementsByName("author").item(0).attributes["content"].nodeValue; //on sélectionne le 1er auteur de la liste des auteurs
 }
 
+function majHorloge1(){
+    //on récupère la date actuelle
+    var now = new Date(Date.now());
+    document.getElementById("horlogeV1").innerText = //on remplace le contenu du <p> identifié par "horlogeV1" par :
+        "Horloge 1 : " //texte indicatif précédent l'horloge
+        + now.getHours() //heures
+        + ":" //séparateur
+        + now.getMinutes() //minutes
+        + ":" //séparateur
+        + now.getSeconds() //secondes
+    setInterval(majHorloge1, 1000); //intervalID = window.setInterval(fonction,delai) avec :
+    //(fonction) -> fonction qui doit être appelée de manière répétée.
+    //(delai) -> nombre de millisecondes que setInterval() doit attendre avant chaque appel de fonction.
+}
+
+function majHorloge2(){
+    var now = new Date(Date.now());
+    document.getElementById("horlogeV2").innerText = "Horloge 2 : " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+    setTimeout(majHorloge2, 1000); //intervalID = window.setTimeout(fnct, delai) avec :
+    //(fnct) -> la fonction que vous désirez exécuter après delai millisecondes.
+    //(delai) -> le nombre de millisecondes après lequel la fonction doit être appelée.
+}
+
+function majGraphH() {
+    const horloge = document.getElementById("graphHorloge");
+    const now = new Date(Date.now());
+    var nowForSplit = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    const chars = nowForSplit.split('');
+    horloge.innerHTML = '';
+    for (const c in chars) {
+        if (chars[c] === ':') { //vrai si les types sont identiques
+            horloge.innerHTML += ':'; //affiche le séparateur
+        } else horloge.innerHTML =
+            horloge.innerHTML.concat('<img src="images/' + chars[c] + '.gif" />'); //affichage des images correspondantes
+    }
+    setInterval(majGraphH, 1000);
+}
+
+function inputNumber() {
+    //modification de la classe (utilisée par le CSS) de l'input
+    if(this.value === ""){
+        this.className = ["blanc"]; //cas vide
+    }
+    else if(!isNaN((this.value))){
+        this.className = ["vert"]; //cas nombre
+    }
+    else{
+        this.className = ["rouge"]; //cas autre
+    }
+}
+
 function getTheDay(day) {
     switch (day) {
         case 0:
@@ -155,6 +206,7 @@ function majNbJours() {
     }
 }
 
+//appel des fonctions
 addEventListener("load", defTitre1);
 addEventListener("load", defTitre2);
 addEventListener("load", defTitre3);
@@ -162,3 +214,7 @@ addEventListener("load", defTitre4);
 addEventListener("load", inverseTexte);
 addEventListener("load", datemodif);
 addEventListener("load", document.getElementById("date_count").addEventListener("click", majNbJours)); //lors d'un clic sur l'élement dont l'id vaut "date_count", appelle la fonction majNbJours
+addEventListener("load", majHorloge1);
+addEventListener("load", majHorloge2);
+addEventListener("load", majGraphH);
+document.querySelector("[type='text']").addEventListener("input", inputNumber); //lors de la saisie dans le formulaire (type="text" nom="input"), appele la fonction inputNumber
