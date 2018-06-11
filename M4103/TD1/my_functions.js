@@ -1,3 +1,6 @@
+addEventListener("load", init);
+SavedDOM = null;
+
 function defTitre1() {
     //on récupère l'élement qui est associé à l'ID "titre"
     var h1 = document.getElementById("titre");
@@ -106,10 +109,11 @@ function majGraphH() {
     setInterval(majGraphH, 1000);
 }
 
+//this : dépend du contexte (passé par l'EventListener chargé en bas de page)
 function inputNumber() {
     //modification de la classe (utilisée par le CSS) de l'input
-    if(this.value === ""){
-        this.className = ["blanc"]; //cas vide
+    if(this.value === ""){ //vrai si les types sont identiques
+        this.className = ["blanc"]; //cas champ vide
     }
     else if(!isNaN((this.value))){
         this.className = ["vert"]; //cas nombre
@@ -206,15 +210,102 @@ function majNbJours() {
     }
 }
 
-//appel des fonctions
-addEventListener("load", defTitre1);
-addEventListener("load", defTitre2);
-addEventListener("load", defTitre3);
-addEventListener("load", defTitre4);
-addEventListener("load", inverseTexte);
-addEventListener("load", datemodif);
-addEventListener("load", document.getElementById("date_count").addEventListener("click", majNbJours)); //lors d'un clic sur l'élement dont l'id vaut "date_count", appelle la fonction majNbJours
-addEventListener("load", majHorloge1);
-addEventListener("load", majHorloge2);
-addEventListener("load", majGraphH);
-document.querySelector("[type='text']").addEventListener("input", inputNumber); //lors de la saisie dans le formulaire (type="text" nom="input"), appele la fonction inputNumber
+var lebody;
+function getByValue() {
+    lebody = document.body.innerHTML;
+    console.log(lebody); //debug
+    var x = document.createElement("p");
+    var t = document.createTextNode("This is a paragraph.");
+    x.appendChild(t);
+    document.body.appendChild(x);
+    x.innerHTML = "<div>div javascript</div>";
+    console.log(document.body);
+    console.log(lebody);
+}
+
+function initMenu() {
+    var menus = document.getElementsByClassName("menu"); 
+    //pour tous les menus (au nombre de 4 ici)
+    //on place un "+" devant le titre et on enroule le menu
+    for(var i = 0; i < menus.length; i++){
+        menus[i].getElementsByTagName("span")[0].addEventListener("click",menu);
+        menus[i].getElementsByTagName("span")[0].innerText = "+ " + menus[i].getElementsByTagName("span")[0].innerText;
+        menus[i].getElementsByTagName("ul")[0].style.display = "none";
+    }
+}
+
+function menu() {
+    //permet de dérouler les menus (et remplace le "+" par "-")
+    var display = this.parentElement.getElementsByTagName("ul")[0].style.display;
+    this.parentElement.getElementsByTagName("ul")[0].style.display = display == "none" ? "block" : "none";
+    this.innerText = (display == "none" ? "-" : "+") + this.innerText.substring(1);
+}
+
+function recherche() {
+    var mot = this.parentElement.children[0].value;
+    if(mot.split(" ").join("") != "") {
+        var id = this.id;
+        document.body.innerHTML = SavedDOM;
+        init();
+        document.getElementById(id).parentElement.children[0].value = mot;
+        rechercheNode(document.body, mot);
+    }
+}
+
+function rechercheNode(noeud, mot){
+    var find ="<span class='select'>"+ mot +"</span>";
+
+    var store = new Array();
+    for(var i = 0; i< noeud.childNodes.length; i++){
+        if(noeud.childNodes[i].nodeType == Node.TEXT_NODE){
+            var text = noeud.childNodes[i].textContent.split(mot);
+            if(text.length > 1 ){
+                for(var j = 0; j< text.length-1; j++){
+                    store.push(document.createTextNode(text[j]));
+                    var span = document.createElement("span");
+                    span.className = ["select"];
+                    span.appendChild(document.createTextNode(mot));
+                    store.push(span);
+                }
+                store.push(document.createTextNode(text[text.length-1]));
+            }
+            else{
+                store.push(noeud.childNodes[i]);
+            }
+        }
+        else if(noeud.childNodes[i].nodeType == Node.ELEMENT_NODE){
+            rechercheNode(noeud.childNodes[i],mot);
+            store.push(noeud.childNodes[i]);
+        }
+    }
+    while(noeud.childNodes.length > 0){
+        noeud.removeChild(noeud.firstChild);
+    }
+    store.reverse();
+    while(store.length > 0){
+        noeud.appendChild(store.pop());
+    }
+}
+
+//appel des fonctions au chargement de la page
+function init() {
+    if(SavedDOM == null) {
+        SavedDOM = document.body.innerHTML;
+    }
+    
+    addEventListener("load", defTitre1);
+    addEventListener("load", defTitre2);
+    addEventListener("load", defTitre3);
+    addEventListener("load", defTitre4);
+    addEventListener("load", inverseTexte);
+    addEventListener("load", datemodif);
+    addEventListener("load", document.getElementById("date_count").addEventListener("click", majNbJours)); //lors d'un clic sur l'élement dont l'id vaut "date_count", appelle la fonction majNbJours
+    addEventListener("load", majHorloge1);
+    addEventListener("load", majHorloge2);
+    addEventListener("load", majGraphH);
+    document.querySelector("[type='text']").addEventListener("input", inputNumber); //lors de la saisie dans le formulaire (type="text" nom="input"), appele la fonction inputNumber
+    //EventListener passe le contexte de l'élément qui a déclenché l'évènement
+    initMenu();
+    document.getElementById("Recherche").addEventListener("click", recherche);
+    document.getElementById("RechercheAuto").addEventListener("input",recherche);
+}

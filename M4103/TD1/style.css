@@ -15,3 +15,46 @@
 .rouge {
     background-color: rgb(255,150,150);
 }
+
+/* Menu déroulant */
+aside {
+    color: white;
+    background-color: lightcyan;
+    width: 300px;
+}
+aside a {
+    color: white;
+}
+aside ul {
+    margin: 0;
+    padding: 2px;
+    list-style: none; /*supprime les puces devant chaque élément du menu*/
+}
+
+.menu {
+    background-color: black;
+    margin: 10px;
+    border-radius: 15px;
+}
+.menu ul {
+    padding: 20px;
+}
+
+.menu ul li {
+    padding: 5px;
+}
+.menu > span {
+    font-family: Consolas, monaco, monospace; /* Police à chasse fixe pour conserver l'emplacement des caractères lors du remplacement du + par - */
+    display: block;
+    background-color: blue;
+    padding: 10px;
+    border-radius: 15px;
+    
+}
+
+/* Mise en évidence de la recherche */
+.select{
+    background-color: yellow;
+    display: inline;
+    color: darkslategray; /* permet de rendre lisible le texte sur fond jaune quel que soit la couleur initiale du texte */
+}
