@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="author" content="Augustin ALONSO" />
+        <title>RSS Feeds</title>
+    </head>
+    <body>
+        <h1>JavaScript - DOM - AJAX - XML</h1>
+        <button id="rssButton">RSS selector</button>
+        <select id="rssFeed">
+                <option value="http://filuns.unice.fr/accueil/rss_view">Unice</option>
+                <option value="https://www.xul.fr/rss.xml">Xul</option>
+                <option value="https://www.lemonde.fr/rss/une.xml">Le Monde</option>
+                <option value="http://localhost:1337/address">Local sails feed</option>
+        </select>
+        <div id="rssContent"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="scriptRSS.js" type="text/javascript"></script>
+    </body>
+</html>
